@@ -1,0 +1,54 @@
+pipeline {
+    agent any 
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building the application...'
+                bat 'mvn clean package' // Maven for Windows
+            }
+        }
+
+        stage('Unit and Integration Tests') {
+            steps {
+                echo 'Running unit and integration tests...'
+                bat 'mvn test' // JUnit/TestNG for Windows
+            }
+        }
+
+        stage('Code Analysis') {
+            steps {
+                echo 'Performing code analysis...'
+                bat 'mvn sonar:sonar' // SonarQube for Windows
+            }
+        }
+
+        stage('Security Scan') {
+            steps {
+                echo 'Running security scan...'
+                bat 'snyk test' // Snyk for Windows
+            }
+        }
+
+        stage('Deploy to Staging') {
+            steps {
+                echo 'Deploying to staging server...'
+                bat 'scp target\\myapp.jar ec2-user@staging-server:/home/ec2-user/' // SCP example
+            }
+        }
+
+        stage('Integration Tests on Staging') {
+            steps {
+                echo 'Running integration tests in staging environment...'
+                bat 'curl -s http://staging-server/api/healthcheck' // API health check
+            }
+        }
+
+        stage('Deploy to Production') {
+            steps {
+                echo 'Deploying to production server...'
+                bat 'scp target\\myapp.jar ec2-user@production-server:/home/ec2-user/' // SCP example
+            }
+        }
+    }
+}
