@@ -31,18 +31,16 @@ pipeline {
                 bat 'npm audit || exit /b 0'
             }
         }
-
-       stage('Send Email Notification') {
-    steps {
-        emailext(
-            subject: "Build Notification: ${currentBuild.result}",
-            body: "The pipeline has completed with status: ${currentBuild.result}. Check Jenkins console for logs.",
-            to: "prasunsa24@gmail.com",
-            attachLog: true,
-            recipientProviders: [[$class: 'DevelopersRecipientProvider']],
-            always: true // This ensures email is sent even if the build fails
-        )
     }
-}
+
+    post {
+        always {
+            emailext(
+                subject: "Build Notification: ${currentBuild.result}",
+                body: "Pipeline finished with status: ${currentBuild.result}. Check Jenkins console logs for details.",
+                to: "prasunsa24@gmail.com",
+                attachLog: true
+            )
+        }
     }
 }
