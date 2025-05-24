@@ -36,7 +36,7 @@ pipeline {
             steps {
                 emailext subject: "Build Notification: ${currentBuild.result}",
                          body: "The pipeline has completed. Status: ${currentBuild.result}. Check Jenkins console for logs.",
-                         to: "prashansapokhrel100@example.com",
+                         to: "prasunsa24@example.com",
                          attachLog: true
             }
         }
