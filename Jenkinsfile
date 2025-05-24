@@ -16,19 +16,28 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                bat 'npm test || exit /b 0' // Allows pipeline to continue even if tests fail
+                bat 'npm test || exit /b 0'
             }
         }
 
         stage('Generate Coverage Report') {
             steps {
-                bat 'npm run coverage || exit /b 0' // Ensures a coverage report is generated
+                bat 'npm run coverage || exit /b 0'
             }
         }
 
         stage('NPM Audit (Security Scan)') {
             steps {
-                bat 'npm audit || exit /b 0' // Displays security vulnerabilities
+                bat 'npm audit || exit /b 0'
+            }
+        }
+
+        stage('Send Email Notification') {
+            steps {
+                emailext subject: "Build Notification: ${currentBuild.result}",
+                         body: "The pipeline has completed. Status: ${currentBuild.result}. Check Jenkins console for logs.",
+                         to: "prashansapokhrel100@example.com",
+                         attachLog: true
             }
         }
     }
