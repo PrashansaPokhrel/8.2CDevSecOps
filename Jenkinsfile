@@ -33,14 +33,5 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            emailext(
-                subject: "Build Notification: ${currentBuild.result}",
-                body: "Pipeline finished with status: ${currentBuild.result}. Check Jenkins console logs for details.",
-                to: "prasunsa24@gmail.com",
-                attachLog: true
-            )
-        }
     }
 }
