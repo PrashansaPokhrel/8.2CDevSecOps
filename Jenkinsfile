@@ -37,7 +37,7 @@ pipeline {
         emailext(
             subject: "Build Notification: ${currentBuild.result}",
             body: "The pipeline has completed with status: ${currentBuild.result}. Check Jenkins console for logs.",
-            to: "prasunsa16@gmail.com",
+            to: "prasunsa24@gmail.com",
             attachLog: true,
             recipientProviders: [[$class: 'DevelopersRecipientProvider']],
             always: true // This ensures email is sent even if the build fails
