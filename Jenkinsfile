@@ -34,7 +34,7 @@ pipeline {
 
         stage('Save Logs') {
             steps {
-                bat 'type C:\\Users\\DELL\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\email\\JenkinsConsoleOutput.log > pipeline.log'
+                bat 'type pipeline.log > logs.txt'
             }
         }
     }
@@ -46,7 +46,7 @@ pipeline {
                 body: """Pipeline execution has completed with status: ${currentBuild.result}.
                 Please find the attached logs for more details.""",
                 to: "prasunsa24@gmail.com",
-                attachmentsPattern: "**/pipeline.log"
+                attachmentsPattern: "**/logs.txt"
             )
         }
     }
